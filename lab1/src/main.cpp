@@ -4,6 +4,7 @@
 #include <chrono>
 #include <filesystem>
 #include <sstream>
+#include <windows.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -60,9 +61,10 @@ vector<vector<int>> multiplyMatrices(const vector<vector<int>>& A, const vector<
     vector<vector<int>> result(rowsA, vector<int>(colsB, 0));
 
     for (int i = 0; i < rowsA; ++i) {
-        for (int j = 0; j < colsB; ++j) {
-            for (int k = 0; k < colsA; ++k) {
-                result[i][j] += A[i][k] * B[k][j];
+        for (int k = 0; k < colsA; ++k) {
+            int a_ik = A[i][k];  
+            for (int j = 0; j < colsB; ++j) {
+                result[i][j] += a_ik * B[k][j];  
             }
         }
     }
@@ -71,7 +73,9 @@ vector<vector<int>> multiplyMatrices(const vector<vector<int>>& A, const vector<
 }
 
 int main() {
-    int sizes[] = { 50, 100, 150, 250, 500, 1000, 2500, 5000 };
+    SetConsoleOutputCP(65001);
+
+    int sizes[] = { 50, 100, 150, 250, 500, 1000};
 
     fs::path resultsDir = fs::current_path().parent_path() / "results";
 

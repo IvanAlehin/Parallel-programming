@@ -41,7 +41,7 @@ void createMatrix(const string& filename, int rows, int cols, int seed) {
 int main() {
     SetConsoleOutputCP(65001);
 
-    int sizes[] = { 50, 100, 150, 250, 500, 1000, 2500, 5000 };
+    int sizes[] = { 50, 100, 150, 250, 500, 1000};
 
     int seedA = static_cast<int>(time(0)); 
     int seedB = seedA + 1;  
