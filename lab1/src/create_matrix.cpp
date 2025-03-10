@@ -13,7 +13,7 @@ using namespace std;
 
 void createMatrix(const string& filename, int rows, int cols, int seed) {
     
-    fs::path project_dir = fs::current_path().parent_path().parent_path().parent_path();
+    fs::path project_dir = fs::current_path().parent_path();
     fs::path data_dir = project_dir / "data";  
 
     fs::create_directories(data_dir);
