@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <sstream>
 #include <windows.h>
+#include <omp.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -60,6 +61,7 @@ vector<vector<int>> multiplyMatrices(const vector<vector<int>>& A, const vector<
 
     vector<vector<int>> result(rowsA, vector<int>(colsB, 0));
 
+    #pragma omp parallel for
     for (int i = 0; i < rowsA; ++i) {
         for (int k = 0; k < colsA; ++k) {
             int a_ik = A[i][k];  
@@ -74,6 +76,8 @@ vector<vector<int>> multiplyMatrices(const vector<vector<int>>& A, const vector<
 
 int main() {
     SetConsoleOutputCP(65001);
+
+    omp_set_num_threads(6);
 
     int sizes[] = { 50, 100, 150, 250, 500, 1000};
 
@@ -98,6 +102,7 @@ int main() {
         auto duration = duration_cast<milliseconds>(end - start);
         cout << "Размер матрицы: " << size << "x" << size << endl;
         cout << "Время выполнения: " << duration.count() << " мс" << endl;
+        cout << "Использовано потоков: " << omp_get_max_threads() << endl;
 
         int elements = size * size;
         cout << "Объем задачи: " << elements << " элементов" << endl;
